@@ -23,7 +23,6 @@ class InitialTestCase(StaticLiveServerTestCase):
         super().tearDown()
 
     def test_smoke_server_started(self):
-        # for some weird reason / returns 404 while admin works. 
-        # interesting, as ./manage.py runserver works flawlessly.
         self.selenium.get('%s%s' % (self.live_server_url, '/admin/'))
         assert 'Django' in self.selenium.title
+
