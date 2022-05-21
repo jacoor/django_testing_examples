@@ -1,6 +1,7 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from selenium.webdriver import FirefoxOptions
 from selenium import webdriver
+from selenium.webdriver import FirefoxOptions
+
 
 class InitialTestCase(StaticLiveServerTestCase):
     """
