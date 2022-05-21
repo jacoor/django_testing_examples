@@ -1,6 +1,4 @@
-from accounts.models import Account
 import pytest
-from .fixtures import joe_doe_account
 from accounts.forms import UserRegisterForm
 
 @pytest.mark.django_db
