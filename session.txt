@@ -1,0 +1,5 @@
+Jako użytkownik chcę się zarejestrować w systemie podając tylko adres email i username.
+Testy
+1. Formularz rejestracji użytkownika
+-- poprawna walidacja
+-- niepoprawna walidacja, adres email już istnieje w systemie. 
