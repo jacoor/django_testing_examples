@@ -1,4 +1,4 @@
-Proces TDD:
+Etapy procesu TDD:
 - czerwony
 - zielony
 - refaktoring
