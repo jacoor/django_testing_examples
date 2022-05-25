@@ -28,6 +28,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
+# critical!
 # AUTH_USER_MODEL = "accounts.Account"
 
 # Application definition
