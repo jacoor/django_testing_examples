@@ -7,6 +7,9 @@ class Account(AbstractUser):
 
 
 class ContactMessage(models.Model):
-    name = models.CharField("imię", max_length=50, blank=False, null=False)
-    email = models.EmailField("email", max_length=255, blank=False, null=False)
-    message = models.TextField("wiadomość", blank=False, null=False)
+    name = models.CharField(verbose_name="imię", max_length=50, blank=False, null=False)
+    email = models.EmailField(verbose_name="adres email", help_text="help text do pola adres email", max_length=255, blank=False, null=False)
+    message = models.TextField(verbose_name="wiadomość", blank=False, null=False)
+
+    def __str__(self):
+        return f"wiadomość od {self.name}({self.email})"
