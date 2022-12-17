@@ -23,6 +23,9 @@ class StudentCard(models.Model):
     creation_date = models.DateField(auto_now_add=True)
     photo = models.ImageField(upload_to="student_photos")
 
+    def __str__(self):
+        return f"{self.student.first_name} {self.student.last_name} {self.card_id}"
+
 
 
 class Account(AbstractUser):
