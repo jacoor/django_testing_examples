@@ -1,23 +1,47 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
+from django.core.validators import MaxValueValidator 
 
 class Student(models.Model):
     first_name = models.CharField(max_length=255)
-    middle_name = models.CharField(max_length=255, blank=True)
     last_name = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255)
-    birth_date = models.DateField()
-    phone_number = models.CharField(max_length=255)
-    addres_street = models.CharField(max_length=255)
-    address_city = models.CharField(max_length=255)
-    address_zipcode = models.CharField(max_length=255)
+    # middle_name = models.CharField(max_length=255, blank=True)
+    # email = models.EmailField(max_length=255)
+    # birth_date = models.DateField()
+    # phone_number = models.CharField(max_length=255)
+    # addres_street = models.CharField(max_length=255)
+    # address_city = models.CharField(max_length=255)
+    # address_zipcode = models.CharField(max_length=255)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+class Course(models.Model):
+    name = models.CharField(max_length=255)
+    students = models.ManyToManyField(Student, through="StudentCourseMembership")
+
+    def __str__(self):
+        return self.name
+
+# nowy model dla relacji ManyToMany
+class StudentCourseMembership(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    enrollment_date = models.DateField("Data zapisania studenta", auto_now_add=True)
+    final_grade = models.PositiveIntegerField("Ocena końcowa", validators=[MaxValueValidator(5)], null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.student}: {self.course}"
+
+    @property
+    def passed(self):
+        return self.final_grade is not None and self.final_grade > 2
+
+
+
 class StudentCard(models.Model):
-    student = models.OneToOneField(Student, on_delete=models.CASCADE)
+    student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name="card")
     card_id = models.CharField(max_length=20)
     expiration_date = models.DateField()
     creation_date = models.DateField(auto_now_add=True)
@@ -39,3 +63,20 @@ class ContactMessage(models.Model):
 
     def __str__(self):
         return f"wiadomość od {self.name}({self.email})"
+
+class Employee(models.Model):
+    first_name = models.CharField(max_length=255)
+    # ponieważ Department jeszcze nie jest zadeklarowany, jego nazwa jest w cudzysłowiu
+    department = models.ForeignKey("Department", related_name="employees", on_delete=models.DO_NOTHING)
+    # dla uproszczenia pomijam pozostałe pola. 
+
+    def __str__(self):
+        return f"{self.first_name}"
+
+class Department(models.Model):
+    name = models.CharField(max_length=255)
+    # dla uproszczenia pomijam pozostałe pola. 
+
+    def __str__(self):
+        return f"{self.name}"
+
